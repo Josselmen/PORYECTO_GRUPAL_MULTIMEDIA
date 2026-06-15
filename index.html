@@ -1,115 +1,551 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Proyecto Grupal Multimedia</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>✨ Desarrollo Multimedia | Proyecto Grupal</title>
+  <!-- Font Awesome 6 (iconos bonitos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: tipografía elegante y cálida -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: Arial;
-      background: #111;
-      color: white;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #FFF3E0 0%, #FFE0B5 100%);
+      min-height: 100vh;
+      color: #3E2A1F;
+      padding: 2rem 1.5rem;
+    }
+
+    /* contenedor principal */
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* encabezado con onda cálida */
+    .hero {
       text-align: center;
+      margin-bottom: 3rem;
     }
 
-    h1 {
-      margin-top: 40px;
+    .hero h1 {
+      font-size: 2.7rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #C2571A, #F39C12);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .menu {
-      margin-top: 50px;
+    .hero h1 i {
+      background: none;
+      color: #D9742C;
+      font-size: 2.5rem;
+      background-clip: unset;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: initial;
     }
 
-    button {
-      padding: 15px 25px;
-      margin: 15px;
-      font-size: 18px;
-      background: #00bcd4;
-      border: none;
+    .hero p {
+      font-size: 1.2rem;
+      color: #7B4A2E;
+      margin-top: 12px;
+      font-weight: 400;
+      background: rgba(255, 235, 205, 0.7);
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* cuatro paneles verticales (grid responsivo) */
+    .paneles-verticales {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    /* cada panel: estilo tarjeta cálida vertical */
+    .panel {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 248, 235, 0.95);
+      backdrop-filter: blur(0px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(98, 45, 18, 0.2), inset 0 1px 0 rgba(255,255,200,0.6);
+      padding: 1.8rem 1.2rem;
+      transition: all 0.25s ease;
+      border: 1px solid #FFD8AE;
+      text-align: center;
       cursor: pointer;
-      border-radius: 8px;
     }
 
-    button:hover {
-      background: #0097a7;
+    .panel:hover {
+      transform: translateY(-8px);
+      background: #FFF6EA;
+      border-color: #F7B05E;
+      box-shadow: 0 28px 38px -12px rgba(160, 80, 20, 0.3);
     }
 
-    #visor {
-      display: none;
-      margin-top: 20px;
+    /* icono redondo dentro del panel */
+    .panel-icon {
+      background: #FEE3C0;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      color: #C2591F;
+      transition: 0.2s;
+      box-shadow: 0 6px 14px rgba(194, 89, 31, 0.2);
+    }
+
+    .panel h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #BF5B22;
+    }
+
+    .panel p {
+      font-size: 0.95rem;
+      color: #6D4C34;
+      margin: 0.6rem 0 1rem;
+      line-height: 1.4;
+    }
+
+    .badge-inciso {
+      background: #FFD5A4;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      color: #A7511A;
+      margin-top: 0.5rem;
+    }
+
+    /* área de contenido dinámico (visor principal) */
+    .visor-container {
+      background: #FEF3E6;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid #FFE2C1;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .visor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px dashed #F7C994;
+      padding-bottom: 1rem;
+    }
+
+    .visor-header h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #BD5823;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-volver {
+      background: #FFE0BC;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #B5531E;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-volver:hover {
+      background: #F7C48C;
+      color: #5E2E12;
+      transform: scale(0.97);
+    }
+
+    .visor-content {
+      min-height: 550px;
+      background: #FFFBF5;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     iframe {
-      width: 80%;
-      height: 500px;
-      border-radius: 10px;
+      width: 100%;
+      max-width: 1000px;
+      height: 550px;
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      background: #2b2b2b;
     }
 
-    .volver {
-      margin-top: 20px;
-      background: #ff5252;
+    .placeholder-info {
+      padding: 2rem;
+      background: #FFF3E6;
+      border-radius: 28px;
+      color: #BE6A33;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .placeholder-info i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: #E6A064;
+    }
+    .footer-note {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #B87A48;
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      body { padding: 1rem; }
+      .panel h3 { font-size: 1.4rem; }
+      .panel-icon { width: 65px; height: 65px; font-size: 2.2rem; }
+      .visor-header h2 { font-size: 1.4rem; }
+      iframe { height: 380px; }
+    }
+    @media (max-width: 700px) {
+      .paneles-verticales { flex-direction: column; max-width: 400px; margin: 0 auto 2rem auto;}
     }
   </style>
-
 </head>
-
 <body>
 
-  <h1>Proyecto Grupal Multimedia</h1>
-
-  <div class="menu" id="menu">
-    <button onclick="verModelo()">Ver Modelo 3D</button>
-    <button onclick="verAnimacion()">Ver Animación Unity</button>
+<div class="dashboard">
+  <div class="hero">
+    <h1>
+      <i class="fas fa-cubes"></i> 
+      DESARROLLO MULTIMEDIA
+      <i class="fas fa-palette"></i>
+    </h1>
+    <p><i class="fas fa-star-of-life"></i> Creatividad · Tecnología · Colaboración <i class="fas fa-star-of-life"></i></p>
   </div>
 
-  <div id="visor"></div>
+  <!-- 4 paneles verticales (incisos requeridos) -->
+  <div class="paneles-verticales" id="panelesMenu">
+    <!-- Panel 1: Actividades Grupales - Digitalización UMSA -->
+    <div class="panel" data-target="tramites">
+      <div class="panel-icon"><i class="fas fa-file-signature"></i></div>
+      <h3>📄 Actividades Grupales</h3>
+      <p><strong>Digitalización de Trámites (UMSA)</strong><br>Diagramas de flujo + BPM con JSON</p>
+      <span class="badge-inciso"><i class="fas fa-tasks"></i> Inciso A · Modelado + JSON</span>
+    </div>
 
-  <script>
+    <!-- Panel 2: Desarrollo 3D y Realidad Virtual - Animación Unity -->
+    <div class="panel" data-target="unityAnim">
+      <div class="panel-icon"><i class="fas fa-film"></i></div>
+      <h3>🎬 Animación Unity</h3>
+      <p>Coreografía sincronizada con música · Exportación WebGL</p>
+      <span class="badge-inciso"><i class="fas fa-music"></i> Inciso B · Animación 3D</span>
+    </div>
 
-    function verModelo() {
-      document.getElementById("menu").style.display = "none";
+    <!-- Panel 3: Fotogrametría - Avatar digital realista -->
+    <div class="panel" data-target="avatarFotogram">
+      <div class="panel-icon"><i class="fas fa-user-astronaut"></i></div>
+      <h3>📸 Avatar · Fotogrametría</h3>
+      <p>Modelo 3D realista a partir de múltiples fotos</p>
+      <span class="badge-inciso"><i class="fas fa-camera-retro"></i> Inciso B · Reconstrucción 3D</span>
+    </div>
 
-      document.getElementById("visor").innerHTML = `
-        <iframe 
-          src="https://sketchfab.com/models/0475cd512e5e427c87f7a8f2fe731219/embed"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          allowfullscreen>
-        </iframe>
-        <br>
-        <button class="volver" onclick="volver()">Volver</button>
-      `;
+    <!-- Panel 4: (extra conceptual) propuesta modernización complementaria -->
+    <div class="panel" data-target="bpmExtra">
+      <div class="panel-icon"><i class="fas fa-database"></i></div>
+      <h3>🗂️ BPM + JSON</h3>
+      <p>Sistema de almacenamiento dinámico<br>(registro, consulta, actualización)</p>
+      <span class="badge-inciso"><i class="fas fa-code-branch"></i> Inciso A · Backend simulado</span>
+    </div>
+  </div>
 
-      document.getElementById("visor").style.display = "block";
+  <!-- VISOR DINÁMICO (donde se carga cada contenido) -->
+  <div class="visor-container" id="visorGlobal" style="display: none;">
+    <div class="visor-header">
+      <h2 id="visorTitle"><i class="fas fa-play-circle"></i> Contenido multimedia</h2>
+      <button class="btn-volver" id="botonVolver"><i class="fas fa-arrow-left"></i> Volver a paneles</button>
+    </div>
+    <div class="visor-content" id="visorContent">
+      <!-- contenido inyectado desde JS -->
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <i class="fas fa-lightbulb"></i> Proyecto Grupal · Desarrollo Multimedia · Colores cálidos & tecnología inmersiva
+  </div>
+</div>
+
+<script>
+  // ----- ENLACES ORIGINALES QUE YA TENÍAS (NO SE MODIFICAN) -----
+  // URL del modelo 3D (Sketchfab) para Fotogrametría? Mantenemos el tuyo.
+  const MODELO_3D_URL = "https://sketchfab.com/models/0475cd512e5e427c87f7a8f2fe731219/embed";
+  
+  // URL de la animación de Unity exportada a WebGL (el enlace original)
+  const UNITY_ANIM_URL = "https://itch.io/embed-upload/17937665?color=333333";
+
+  // ----- ESTRUCTURA DE CONTENIDO POR CADA PANEL (4 incisos) -----
+  // cada elemento define title, contenidoHTML (manteniendo enlaces originales)
+  const contenidosMap = {
+    tramites: {
+      titulo: "📋 Digitalización de Trámites Universitarios (UMSA)",
+      html: `
+        <div class="placeholder-info">
+          <i class="fas fa-chalkboard-user"></i>
+          <h3 style="color:#C2591F">Modelado del Proceso + BPM con JSON</h3>
+          <p style="max-width:600px; margin:1rem auto;">Diagrama de flujo funcional, identificación de entradas, validaciones. Almacenamiento basado en archivos JSON (simulación local). Registro, consulta y actualización dinámica.</p>
+          <div style="display:flex; gap: 1rem; flex-wrap: wrap; justify-content:center; margin-top: 1rem;">
+            <div style="background:#FFE1C4; border-radius: 2rem; padding: 1rem; flex:1; min-width:200px;">
+              <i class="fas fa-project-diagram"></i> <strong>Diagrama BPMN</strong><br> 
+              <span style="font-size:0.9rem;">(Flujo: Solicitud → Validación → Registro JSON → Notificación)</span>
+            </div>
+            <div style="background:#FFE1C4; border-radius: 2rem; padding: 1rem; flex:1; min-width:200px;">
+              <i class="fas fa-database"></i> <strong>Simulador JSON</strong><br>
+              <button id="demoJsonBtn" style="background:#E7A55D; border:none; margin-top:8px; padding: 8px 16px; border-radius: 30px; color:white; font-weight:bold; cursor:pointer;"><i class="fas fa-save"></i> Probar registro</button>
+              <div id="jsonDemoMsg" style="margin-top:12px; font-size:0.8rem;"></div>
+            </div>
+          </div>
+          <p style="margin-top:1rem;"><i class="fas fa-check-circle"></i> Propuesta de modernización para inscripción de materias / certificados.</p>
+        </div>
+      `,
+      // script adicional para demo JSON (pequeña simulación)
+      onLoadScript: () => {
+        const btn = document.getElementById("demoJsonBtn");
+        if(btn) {
+          // eliminar listeners previos para evitar duplicados
+          const newBtn = btn.cloneNode(true);
+          btn.parentNode.replaceChild(newBtn, btn);
+          newBtn.addEventListener("click", () => {
+            const msgDiv = document.getElementById("jsonDemoMsg");
+            if(msgDiv) {
+              // Simulación de almacenamiento JSON (como si fuera un sistema)
+              const tramiteEjemplo = {
+                id: Date.now(),
+                tipo: "Inscripción de materias",
+                estado: "registrado",
+                timestamp: new Date().toLocaleString(),
+                usuario: "Estudiante UMSA"
+              };
+              localStorage.setItem("tramite_demo", JSON.stringify(tramiteEjemplo));
+              // consultar actualización dinámica
+              const consultado = JSON.parse(localStorage.getItem("tramite_demo"));
+              msgDiv.innerHTML = `<span style="background:#F3D9BF; padding:6px 12px; border-radius:50px;">✅ Trámite registrado: ${consultado.tipo} - ${consultado.estado} (${consultado.timestamp})<br>📌 Datos almacenados vía JSON simulado.</span>`;
+              setTimeout(() => {
+                if(msgDiv) msgDiv.innerHTML += `<br><small><i class="fas fa-sync-alt"></i> Actualización dinámica exitosa</small>`;
+              }, 300);
+            }
+          });
+        }
+      }
+    },
+    unityAnim: {
+      titulo: "🎮 Animación Sincronizada - Unity (WebGL)",
+      html: `
+        <div style="width:100%;">
+          <iframe 
+            src="${UNITY_ANIM_URL}"
+            width="100%" 
+            height="550"
+            frameborder="0"
+            allowfullscreen
+            style="border-radius: 24px;"
+            title="Animación Unity - Coreografía sincronizada">
+          </iframe>
+          <p style="margin-top: 16px; background:#FFEEDD; padding: 0.6rem; border-radius: 60px;">
+            <i class="fas fa-headphones"></i> Música + coreografía de personajes · Exportado en WebGL · Interactivo
+          </p>
+        </div>
+      `,
+      onLoadScript: () => {} 
+    },
+    avatarFotogram: {
+      titulo: "🕺 Avatar Digital por Fotogrametría",
+      html: `
+        <div style="width:100%; text-align:center;">
+          <iframe 
+            src="${MODELO_3D_URL}"
+            allow="autoplay; fullscreen; xr-spatial-tracking"
+            allowfullscreen
+            style="width:100%; height:550px; border-radius:20px;">
+          </iframe>
+          <div style="margin-top: 1rem; background:#FFE6D0; border-radius: 2rem; padding: 0.8rem;">
+            <i class="fas fa-3d"></i> Modelo tridimensional realista generado con múltiples fotografías (fotogrametría) | Visualización interactiva
+          </div>
+          <p class="badge-inciso" style="margin-top:12px; background:#FCCD95;"><i class="fas fa-camera"></i> Captura: miembro del grupo → Mesh + Textura realista</p>
+        </div>
+      `,
+      onLoadScript: () => {}
+    },
+    bpmExtra: {
+      titulo: "📁 BPM + JSON: Almacenamiento dinámico",
+      html: `
+        <div class="placeholder-info">
+          <i class="fas fa-server" style="font-size:3rem;"></i>
+          <h3>Sistema de gestión de trámites (archivos JSON)</h3>
+          <p>Registro, consulta y actualización sin servidor tradicional. Basado en localStorage (simulación JSON).</p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin: 1.5rem 0;">
+            <button id="registrarTramiteBpm" style="background:#E69347; border:none; border-radius:40px; padding:12px; color:white; font-weight:bold;"><i class="fas fa-plus-circle"></i> Registrar solicitud</button>
+            <button id="consultarTramiteBpm" style="background:#BF713C; border:none; border-radius:40px; padding:12px; color:white; font-weight:bold;"><i class="fas fa-search"></i> Consultar último</button>
+            <button id="actualizarEstadoBpm" style="background:#9F592B; border:none; border-radius:40px; padding:12px; color:white; font-weight:bold;"><i class="fas fa-edit"></i> Actualizar estado</button>
+          </div>
+          <div id="bpmOutput" style="background:#FFF0E0; border-radius: 20px; padding: 1rem; text-align: left; font-family: monospace;"></div>
+          <p class="badge-inciso" style="margin-top:16px;"><i class="fas fa-code"></i> Implementación 100% frontend · JSON schema validable</p>
+        </div>
+      `,
+      onLoadScript: () => {
+        // funciones para demo BPM con simulación de archivos JSON
+        let storageKey = "bpm_tramites_umsa";
+        if(!localStorage.getItem(storageKey)){
+          localStorage.setItem(storageKey, JSON.stringify([]));
+        }
+        const outputDiv = document.getElementById("bpmOutput");
+        const actualizarOutput = (msg) => {
+          if(outputDiv) outputDiv.innerHTML = msg;
+        };
+        const listarTramites = () => {
+          let data = JSON.parse(localStorage.getItem(storageKey)) || [];
+          if(data.length === 0) return "<i class='fas fa-info-circle'></i> No hay trámites registrados.";
+          return data.map((t, idx) => `<div style="border-bottom:1px solid #EECB9E; padding:6px;"><strong>#${idx+1}</strong> ID: ${t.id} | Tipo: ${t.tipo} | Estado: ${t.estado} | ${t.fecha}</div>`).join('');
+        };
+        // registrar
+        const btnReg = document.getElementById("registrarTramiteBpm");
+        if(btnReg) {
+          btnReg.onclick = () => {
+            let tramites = JSON.parse(localStorage.getItem(storageKey));
+            const nuevoId = Date.now();
+            const nuevo = {
+              id: nuevoId,
+              tipo: "Certificado de notas / Solicitud título",
+              estado: "pendiente",
+              fecha: new Date().toLocaleString()
+            };
+            tramites.push(nuevo);
+            localStorage.setItem(storageKey, JSON.stringify(tramites));
+            actualizarOutput(`✅ Registrado: ${nuevo.tipo} (ID: ${nuevo.id})<br><br><strong>Listado actual:</strong><br>${listarTramites()}`);
+          };
+        }
+        const btnCon = document.getElementById("consultarTramiteBpm");
+        if(btnCon) {
+          btnCon.onclick = () => {
+            let tramites = JSON.parse(localStorage.getItem(storageKey));
+            if(tramites.length === 0) actualizarOutput("⚠️ No hay trámites para consultar. Registra uno primero.");
+            else {
+              let ultimo = tramites[tramites.length-1];
+              actualizarOutput(`📋 Último trámite registrado:<br>ID: ${ultimo.id}<br>Tipo: ${ultimo.tipo}<br>Estado: ${ultimo.estado}<br>Fecha: ${ultimo.fecha}<br><br><strong>Historial:</strong><br>${listarTramites()}`);
+            }
+          };
+        }
+        const btnUpd = document.getElementById("actualizarEstadoBpm");
+        if(btnUpd) {
+          btnUpd.onclick = () => {
+            let tramites = JSON.parse(localStorage.getItem(storageKey));
+            if(tramites.length === 0) actualizarOutput("❌ No hay trámites para actualizar.");
+            else {
+              let ultimoIdx = tramites.length-1;
+              tramites[ultimoIdx].estado = tramites[ultimoIdx].estado === "pendiente" ? "aprobado" : "finalizado";
+              tramites[ultimoIdx].fechaActualizacion = new Date().toLocaleString();
+              localStorage.setItem(storageKey, JSON.stringify(tramites));
+              actualizarOutput(`🔄 Estado actualizado a: "${tramites[ultimoIdx].estado}" <br> ID: ${tramites[ultimoIdx].id}<br><br>${listarTramites()}`);
+            }
+          };
+        }
+        if(outputDiv) actualizarOutput(`📂 Sistema JSON listo. Usa los botones para registrar, consultar y actualizar.<br><br>${listarTramites()}`);
+      }
     }
+  };
 
-function verAnimacion() {
-  document.getElementById("menu").style.display = "none";
+  // Referencias DOM
+  const visorGlobal = document.getElementById("visorGlobal");
+  const visorContent = document.getElementById("visorContent");
+  const visorTitleSpan = document.getElementById("visorTitle");
+  const botonVolver = document.getElementById("botonVolver");
+  const paneles = document.querySelectorAll(".panel");
 
-  document.getElementById("visor").innerHTML = `
-    <iframe 
-      src="https://itch.io/embed-upload/17937665?color=333333"
-      width="100%" 
-      height="700"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
+  let currentActive = null;
 
-    <br><br>
-
-    <button class="volver" onclick="volver()">Volver</button>
-  `;
-
-  document.getElementById("visor").style.display = "block";
-}
-
-    function volver() {
-      document.getElementById("visor").style.display = "none";
-      document.getElementById("menu").style.display = "block";
+  // función para cargar contenido según target
+  function cargarPanel(targetId) {
+    const data = contenidosMap[targetId];
+    if(!data) return;
+    // cambiar título
+    visorTitleSpan.innerHTML = `<i class="fas fa-window-maximize"></i> ${data.titulo}`;
+    // inyectar HTML
+    visorContent.innerHTML = data.html;
+    // mostrar visor
+    visorGlobal.style.display = "block";
+    // ejecutar script extra si existe
+    if(data.onLoadScript) {
+      // pequeño timeout para asegurar DOM
+      setTimeout(() => {
+        data.onLoadScript();
+      }, 30);
     }
+    // opcional: desplazamiento suave
+    visorGlobal.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
-  </script>
+  // Eventos para cada panel (respetando los cuatro incisos)
+  paneles.forEach(panel => {
+    panel.addEventListener("click", (e) => {
+      const target = panel.getAttribute("data-target");
+      if(target) {
+        cargarPanel(target);
+      }
+    });
+  });
 
+  // Botón volver -> esconde visor y muestra los paneles de nuevo
+  botonVolver.addEventListener("click", () => {
+    visorGlobal.style.display = "none";
+    // reiniciar contenido interno para limpieza
+    visorContent.innerHTML = "";
+    // scroll hacia los paneles
+    document.getElementById("panelesMenu").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  // Estilo adicional: si se recarga la página sin visor, oculto
+  if(visorGlobal) visorGlobal.style.display = "none";
+
+  // Por si se quiere mostrar un mensaje inicial opcional, pero mantenemos limpio
+  console.log("Interfaz cálida con 4 paneles verticales: Digitalización, Unity Anim, Avatar Fotogrametría, BPM JSON");
+</script>
 </body>
 </html>
