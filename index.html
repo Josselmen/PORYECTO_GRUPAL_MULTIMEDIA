@@ -3,23 +3,37 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Avatar 3D - Fotogrametría</title>
+  <title>Proyecto Grupal Multimedia</title>
 
   <style>
     body {
+      margin: 0;
       font-family: Arial;
-      text-align: center;
       background: #111;
       color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 40px;
+    }
+
+    .menu {
+      margin-top: 50px;
     }
 
     button {
-      padding: 12px 20px;
-      font-size: 16px;
+      padding: 15px 25px;
+      margin: 15px;
+      font-size: 18px;
       background: #00bcd4;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 8px;
+    }
+
+    button:hover {
+      background: #0097a7;
     }
 
     #visor {
@@ -32,31 +46,66 @@
       height: 500px;
       border-radius: 10px;
     }
+
+    .volver {
+      margin-top: 20px;
+      background: #ff5252;
+    }
   </style>
 
 </head>
 
 <body>
 
-  <h1>Reconstrucción de Avatar Digital</h1>
+  <h1>Proyecto Grupal Multimedia</h1>
 
-<button onclick="mostrarModelo()">Ver modelo 3D</button>
-
-  <div id="visor">
-    <iframe 
-      title="Josue_04"
-      frameborder="0"
-      allowfullscreen
-      allow="autoplay; fullscreen; xr-spatial-tracking"
-      src="https://sketchfab.com/models/0475cd512e5e427c87f7a8f2fe731219/embed">
-    </iframe>
+  <div class="menu" id="menu">
+    <button onclick="verModelo()">Ver Modelo 3D</button>
+    <button onclick="verAnimacion()">Ver Animación Unity</button>
   </div>
 
+  <div id="visor"></div>
+
   <script>
-    function mostrarModelo() {
+
+    function verModelo() {
+      document.getElementById("menu").style.display = "none";
+
+      document.getElementById("visor").innerHTML = `
+        <iframe 
+          src="https://sketchfab.com/models/0475cd512e5e427c87f7a8f2fe731219/embed"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          allowfullscreen>
+        </iframe>
+        <br>
+        <button class="volver" onclick="volver()">Volver</button>
+      `;
+
       document.getElementById("visor").style.display = "block";
     }
+
+    function verAnimacion() {
+      document.getElementById("menu").style.display = "none";
+
+      document.getElementById("visor").innerHTML = `
+        <iframe 
+          src="https://itch.io/embed-upload/REEMPLAZA_ESTO"
+          allowfullscreen>
+        </iframe>
+        <br>
+        <button class="volver" onclick="volver()">Volver</button>
+      `;
+
+      document.getElementById("visor").style.display = "block";
+    }
+
+    function volver() {
+      document.getElementById("visor").style.display = "none";
+      document.getElementById("menu").style.display = "block";
+    }
+
   </script>
 
 </body>
 </html>
+
