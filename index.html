@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Avatar 3D - Fotogrametría</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #111;
+      color: white;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background: #00bcd4;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #visor {
+      display: none;
+      margin-top: 20px;
+    }
+
+    iframe {
+      width: 80%;
+      height: 500px;
+      border-radius: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h1>Reconstrucción de Avatar Digital</h1>
+
+<button onclick="mostrarModelo()">Ver modelo 3D</button>
+
+  <div id="visor">
+    <iframe 
+      title="Josue_04"
+      frameborder="0"
+      allowfullscreen
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      src="https://sketchfab.com/models/0475cd512e5e427c87f7a8f2fe731219/embed">
+    </iframe>
+  </div>
+
+  <script>
+    function mostrarModelo() {
+      document.getElementById("visor").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
